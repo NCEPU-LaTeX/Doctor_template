@@ -1,0 +1,86 @@
+\chapter{绪论} % 添加到中文目录
+\echapter{Introduction} % 添加到英文目录
+
+\section{示例章节}
+
+本节演示本模板中各类数学环境与算法环境的使用方法。
+
+\begin{definition}[向量范数] % 定义
+设 $\mathbf{x}=(x_1,\dots,x_n)\in\mathbb{R}^n$，向量的 $2$ 范数定义为
+\[
+\|\mathbf{x}\|_2=\sqrt{\sum_{i=1}^n x_i^2}.
+\]
+\end{definition}
+
+\begin{theorem}[Cauchy–Schwarz 不等式] % 定理
+对于任意 $\mathbf{x},\mathbf{y}\in\mathbb{R}^n$，成立：
+\[
+|\mathbf{x}^\top \mathbf{y}| \le \|\mathbf{x}\|_2 \, \|\mathbf{y}\|_2.
+\]
+\end{theorem}
+
+\begin{lemma} % 引理
+若向量 $\mathbf{x}$ 与 $\mathbf{y}$ 线性无关，则 $\|\alpha \mathbf{x} + \beta \mathbf{y}\|_2 = 0$ 当且仅当 $\alpha=\beta=0$。
+\end{lemma}
+
+\begin{corollary} % 推论
+若 $\mathbf{x}\neq \mathbf{0}$，则有 $\|\mathbf{x}\|_2 > 0$。
+\end{corollary}
+
+\begin{proposition} % 性质
+对任意标量 $c$，向量范数满足齐次性：$\|c\mathbf{x}\|_2=|c|\|\mathbf{x}\|_2$。
+\end{proposition}
+
+\begin{example} % 例
+例如，向量 $\mathbf{x}=(3,4)$ 的 $2$ 范数为 $\|\mathbf{x}\|_2=5$。
+\end{example}
+
+\begin{remark} % 注
+上述性质表明二范数是欧氏空间中最常用的度量方式。
+\end{remark}
+
+\begin{proof} %证明
+不等式的证明可由平方展开并利用非负性条件得到。具体地，
+\[
+0 \le \|\mathbf{x}-t\mathbf{y}\|_2^2
+\]
+展开并对 $t$ 求最优，即得结论。
+\end{proof}
+
+算法引用示例\algref{alg:population-sim}  % 算法的引用
+
+
+\begin{algorithm}[h]
+  \caption{基于个体模拟的种群动态演化算法}
+  \label{alg:population-sim}
+  \begin{algorithmic}[1]
+    \STATE 初始化种群 $\mathcal{P}_0$，包含 $N$ 个个体，每个个体具有特征向量 $\mathbf{x}_i \in \mathbb{R}^d$
+    \STATE 初始化环境承载容量 $K$，基础繁殖率 $\lambda$，变异幅度 $\sigma$，自然淘汰阈值 $\epsilon$
+    \STATE 初始化资源分布矩阵 $\mathbf{R} \in \mathbb{R}^{M \times M}$，季节周期 $T_s$
+
+    \FOR{$t = 1$ 至 $T_{max}$}
+      \STATE 根据季节因子更新资源分布：$\mathbf{R}_t \gets \mathbf{R} \cdot (1 + \beta \sin(2\pi t / T_s))$
+      \STATE 计算种群密度 $\rho_t = |\mathcal{P}_t| / K$
+
+      \WHILE{存在未评估的个体}
+        \STATE 计算个体 $i$ 的适应度 $f_i = g(\mathbf{x}_i, \mathbf{R}_t) \cdot (1 - \rho_t)$
+
+        \IF{$f_i < \epsilon$}
+          \STATE 将个体 $i$ 标记为淘汰，从种群中移除
+        \ELSE
+          \STATE 以概率 $p_i = \lambda \cdot f_i / \bar{f}$ 判定个体 $i$ 是否繁殖
+          \IF{个体 $i$ 进行繁殖}
+            \STATE 随机选择配偶 $j$，要求 $\|\mathbf{x}_i - \mathbf{x}_j\| \leq \delta$
+            \STATE 生成后代特征：$\mathbf{x}_{new} = \frac{1}{2}(\mathbf{x}_i + \mathbf{x}_j) + \mathcal{N}(0, \sigma^2 \mathbf{I})$
+            \STATE 将后代加入下一代种群 $\mathcal{P}_{t+1}$
+          \ENDIF
+        \ENDIF
+      \ENDWHILE
+
+      \FOR{每个存活个体 $i \in \mathcal{P}_{t+1}$}
+        \STATE 根据资源梯度更新位置：$\mathbf{x}_i \gets \mathbf{x}_i + \eta \, \nabla_{\mathbf{x}} g(\mathbf{x}_i, \mathbf{R}_t)$
+      \ENDFOR
+    \ENDFOR
+  \end{algorithmic}
+\end{algorithm}
+
