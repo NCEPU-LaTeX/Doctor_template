@@ -20,6 +20,11 @@
 \RequirePackage{algorithm, algorithmic}    % 算法代码
 \RequirePackage{tikz, pgfplots}              % 绘图
 
+\usepackage{mathptmx}
+
+% \usepackage[bold-style=ISO]{unicode-math}
+% \setmathfont{XITS Math}
+
 \RequirePackage{fontspec, color, url, array}
 \setmainfont{Times New Roman}[
   Ligatures = TeX,
@@ -27,7 +32,8 @@
   ItalicFont = Times New Roman Italic,
   BoldItalicFont = Times New Roman Bold Italic
 ]
-
+% \RequirePackage{unicode-math}
+% \setmathfont{TeX Gyre Termes Math}
 % \RequirePackage{txfonts}   
 \RequirePackage{wasysym} % Times 风格（数学）字体
 % ---- 定义页边距 ----- includehead=true, includefoot=true,
@@ -659,12 +665,16 @@
 \def\ccosupervisoren#1{\def\@ccosupervisoren{#1}}\def\@ccosupervisoren{} % 联合导师（仅学术博士）
 
 % 专业博士专用字段
-\def\cmentoren#1{\def\@cmentoren{#1}}\def\@cmentoren{}    % 企业导师（仅专业博士）
 \def\cclutivationen#1{\def\@cclutivationen{#1}}\def\@cclutivationen{} % 学习方式（仅专业博士）
+
+\def\signaturestudent#1{\def\@signaturestudent{#1}}\def\@signaturestudent{} % 学生签字
+\def\signaturesupervisor#1{\def\@signaturesupervisor{#1}}\def\@signaturesupervisor{} % 导师签字
 
 % 图书分类号
 \def\cclc#1{\def\@cclc{#1}}\def\@cclc{}                   % 国内图书分类号
 \def\cudc#1{\def\@cudc{#1}}\def\@cudc{}                   % 国际图书分类号
+\def\SchoolCode#1{\def\@SchoolCode{#1}}\def\@SchoolCode{} 
+
 
 % ====== 论文标题页 ====== %
 \def\maketitlepage{
@@ -686,7 +696,8 @@
     % 使用弹性盒子而不是固定高度的minipage
     {\begin{spacing}{1.35} \Heiti \zihao{2} \@ctitlezh \end{spacing}}
     \par \vspace{0.3em}
-    \ifx\@Ltitle
+    \def\trueValue{False} 
+    \ifx\@Ltitle\trueValue
       {\begin{spacing}{1} \zihao{-2} \textbf{\@ctitleen} \end{spacing}}
     \else
       {\begin{spacing}{1} \zihao{2} \textbf{\@ctitleen} \end{spacing}}
@@ -712,8 +723,8 @@
   \thispagestyle{empty}
  {\zihao{-4} \noindent
   \begin{tabularx}{\textwidth}{@{}p{11.2cm}p{3.5cm}@{}}
-    \zihao{-4}{国内图书分类号：\@cclc}  &  \zihao{-4}{ 学校代码：10054} \\
-    \zihao{-4}{国际图书分类号：\@cudc } & \zihao{-4}{ 密\quad\quad 级：公开}
+    \zihao{-4}{国内图书分类号：\@cclc}  &  \zihao{-4}{ 学校代码：\@SchoolCode} \\
+    \zihao{-4}{国际图书分类号：\@cudc } & \zihao{-4}{ 密~~~~~~~~~级：公开}
   \end{tabularx}}
   \par\vspace{6em}
   \begin{center}
@@ -734,10 +745,6 @@
     \begin{tabular}{c@{\hspace{0em}}l}
         \makebox[3.7cm][s]{\zihao{4}{{\Heiti 博士研究生}：}}   & \zihao{4}\@cauthorzh   \\
         \makebox[3.7cm][s]{\zihao{4}{{\Heiti 导师}：}} & \zihao{4}\@cadvisorzh    \\
-        % 专业博士显示企业导师
-        \ifx\@degreetype\@professional
-          \makebox[3.7cm][s]{\zihao{4}{{\Heiti 企业导师}：}} & \zihao{4}\@cmentorzh   \\
-        \fi
         % 学术博士显示"申请学位"，专业博士显示"申请学位 博士"
         \ifx\@degreetype\@academic
           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 申请学位}：}} & \zihao{4}\@cdegreezh   \\
@@ -771,7 +778,8 @@
       {\zihao{-2} Dissertation for the Professional Doctoral Degree}
     \fi
     \par\vspace{2.9em}
-    \ifx\@Ltitle
+    \def\trueValue{False} 
+    \ifx\@Ltitle\trueValue
       {\begin{spacing}{1} \zihao{-2} \textbf{\@ctitleen} \end{spacing}}
     \else
       {\begin{spacing}{1} \zihao{2} \textbf{\@ctitleen} \end{spacing}}
@@ -786,7 +794,7 @@
       \begin{tabular}{@{}m{6.7cm}m{8cm}@{}}
         \textbf{\zihao{4} Candidate:} & \zihao{4} \@cauthoren \\
         \textbf{\zihao{4} Supervisor:} & \zihao{4} \@cadvisoren \\
-        \textbf{\zihao{4} Co-Supervisor:} & \zihao{4} \@ccosupervisoren \\
+        % \textbf{\zihao{4} Co-Supervisor:} & \zihao{4} \@ccosupervisoren \\
         \textbf{\zihao{4} Academic Degree Applied for:} & \zihao{4} \@cdegreeen \\
         \textbf{\zihao{4} Subject:} & \zihao{4} \@csubjecten \\
         \textbf{\zihao{4} Speciality:} & \zihao{4} \@cmajoren \\
@@ -799,7 +807,6 @@
       \begin{tabular}{@{}m{7cm}m{8cm}@{}}
         \textbf{\zihao{4} Candidate:} & \zihao{4} \@cauthoren \\
         \textbf{\zihao{4} Supervisor:} & \zihao{4} \@cadvisoren \\
-        \textbf{\zihao{4} Enterprise mentor:} & \zihao{4} \@cmentoren \\
         \textbf{\zihao{4} Professional Degree Applied for:} & \zihao{4} \@cdegreeen \\
         \textbf{\zihao{4} Speciality:} & \zihao{4} \@csubjecten \\
         \textbf{\zihao{4} Cultivation ways:} & \zihao{4} \@cclutivationen \\
@@ -834,8 +841,8 @@
   {\zihao{-4} \sloppy
   本人郑重声明：此处所提交的学位论文《\@ctitlezh》，是本人在导师指导下，在华北电力大学攻读学位期间独立进行研究工作所取得的成果。论文中除已注明部分外不包含他人已发表或完成的研究成果。对本文的研究工作做出重要贡献的个人和集体，均已在文中以明确方式注明。论文由本人撰写，未使用人工智能代写。本声明的法律结果将完全由本人承担。
   \par \vspace*{1.5em}
-  ~~ 作者签名: \hspace{3.5cm}
-  \hspace{2.5cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 }
+  ~~ 作者签名: \raisebox{-0.3cm}{\includegraphics[height=1cm]\@signaturestudent} 
+  \hspace{3cm}日期:\hspace{1cm}年 \hspace{0.6cm}月 \hspace{0.6cm}日 }
   \vspace*{4.5em}
   \begin{center}{\ziju{0} \Heiti \zihao{-2} 华北电力大学学位论文使用授权书}\end{center}
   \par\vspace*{1.2em}
@@ -854,242 +861,17 @@
   \ifx\@csecretlevel\@confidential $\Large\CheckedBox$ \else $\Large\Square$ \fi 机密 \hspace*{0.5cm} 
   \ifx\@csecretlevel\@topsecret $\Large\CheckedBox$ \else $\Large\Square$ \fi 绝密 \par 
   \par \vspace*{1.6em}
-  作者签名: \hspace{3.5cm}
-  \hspace{3cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 
+  作者签名:  \raisebox{-0.3cm}{\includegraphics[height=1cm]\@signaturestudent} 
+  \hspace{3.2cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 
   \par \vspace*{1.6em}
-  导师签名: \hspace{3.5cm}
-  \hspace{3cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 
+  导师签名: \raisebox{-0.3cm}{\includegraphics[height=1cm]\@signaturesupervisor}
+  \hspace{3.2cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日
+  % 作者签名: \hspace{3.5cm}
+  % \hspace{3cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 
+  % \par \vspace*{1.6em}
+  % 导师签名: \hspace{3.5cm}
+  % \hspace{3cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 
   }
 }
 
 \makeatother
-% % ---- 封面 ----- %
-% \makeatletter
-
-% % ====== 学位类型参数定义 ====== %
-% % 在main.tex中使用 \degreetype{academic} 或 \degreetype{professional}
-% \def\degreetype#1{\def\@degreetype{#1}}\def\@degreetype{academic}  % 默认为学术博士
-
-% % 定义学位类型选项
-% \def\@academic{academic}
-% \def\@professional{professional}
-
-% % ====== 中文信息 ====== %
-% \def\ctitlezh#1{\def\@ctitlezh{#1}}\def\@ctitlezh{}      % 题目
-% \def\cauthorzh#1{\def\@cauthorzh{#1}}\def\@cauthorzh{}   % 作者
-% \def\cadvisorzh#1{\def\@cadvisorzh{#1}}\def\@cadvisorzh{} % 导师
-% \def\cdegreezh#1{\def\@cdegreezh{#1}}\def\@cdegreezh{}   % 申请学位
-% \def\cschoolzh#1{\def\@cschoolzh{#1}}\def\@cschoolzh{}   % 院系
-% \def\cdatezh#1{\def\@cdatezh{#1}}\def\@cdatezh{}         % 日期
-
-% % 学术博士专用字段
-% \def\csubjectzh#1{\def\@csubjectzh{#1}}\def\@csubjectzh{} % 学科（学术）/专业领域（专业）
-% \def\cmajorzh#1{\def\@cmajorzh{#1}}\def\@cmajorzh{}       % 专业（仅学术博士）
-
-% % 专业博士专用字段
-% \def\cmentorzh#1{\def\@cmentorzh{#1}}\def\@cmentorzh{}    % 企业导师（仅专业博士）
-% \def\cclutivationzh#1{\def\@cclutivationzh{#1}}\def\@cclutivationzh{} % 学习方式（仅专业博士）
-
-% % ====== 英文信息 ====== %
-% \def\ctitleen#1{\def\@ctitleen{#1}}\def\@ctitleen{}       % 题目
-% \def\cauthoren#1{\def\@cauthoren{#1}}\def\@cauthoren{}    % 作者
-% \def\cadvisoren#1{\def\@cadvisoren{#1}}\def\@cadvisoren{} % 导师
-% \def\cdegreeen#1{\def\@cdegreeen{#1}}\def\@cdegreeen{}    % 申请学位
-% \def\cschoolen#1{\def\@cschoolen{#1}}\def\@cschoolen{}    % 院系
-% \def\cdateen#1{\def\@cdateen{#1}}\def\@cdateen{}          % 日期
-
-% % 学术博士专用字段
-% \def\csubjecten#1{\def\@csubjecten{#1}}\def\@csubjecten{} % 学科（学术）/专业领域（专业）
-% \def\cmajoren#1{\def\@cmajoren{#1}}\def\@cmajoren{}       % 专业（仅学术博士）
-% \def\ccosupervisoren#1{\def\@ccosupervisoren{#1}}\def\@ccosupervisoren{} % 联合导师（仅学术博士）
-
-% % 专业博士专用字段
-% \def\cmentoren#1{\def\@cmentoren{#1}}\def\@cmentoren{}    % 企业导师（仅专业博士）
-% \def\cclutivationen#1{\def\@cclutivationen{#1}}\def\@cclutivationen{} % 学习方式（仅专业博士）
-
-% % 图书分类号
-% \def\cclc#1{\def\@cclc{#1}}\def\@cclc{}                   % 国内图书分类号
-% \def\cudc#1{\def\@cudc{#1}}\def\@cudc{}                   % 国际图书分类号
-
-% % ====== 论文标题页 ====== %
-% \def\maketitlepage{
-%   \thispagestyle{empty}
-%   \par \vspace*{0.6em}
-%   \begin{center}
-%     \includegraphics[width=0.6\linewidth]{figure_for_NCEPU/ncepu.png}
-%   \end{center}
-%   \begin{center}
-%     {\Heiti \zihao{5} \hfill  
-%     \par \vspace*{0.6em}
-%     % 根据学位类型显示不同标题
-%     \ifx\@degreetype\@academic
-%       {\zihao{-1} \textbf{\Songti 学术博士学位论文}}
-%     \else
-%       {\zihao{-1} \textbf{\Songti 专业博士学位论文}}
-%     \fi
-%     \par \vspace{1.9em}
-%     \begin{minipage}[c][6cm]{14cm}
-%         \setlength{\baselineskip}{32pt} 
-%         \centering {\Heiti \zihao{2} \@ctitlezh}
-%         \par \vspace{1.2em}
-%         \centering {\zihao{-2} \textbf{\@ctitleen}}      
-%     \end{minipage}
-%     \par \vspace{14em}
-%     {\Songti \zihao{-2} \textbf{\@cauthorzh}}
-%     \par \vspace{10.5em}
-%     {\Songti \zihao{-2} \textbf{\@cdatezh}}}
-%   \end{center}
-%   \clearpage
-% }
-
-% % ====== 中文信息页 ====== %
-% \def\makechinainfopage{
-%   \thispagestyle{empty}
-%  {\zihao{-4} \noindent
-%   \begin{tabularx}{\textwidth}{@{}p{11.2cm}p{3.5cm}@{}}
-%     \zihao{-4}{国内图书分类号：\@cclc}  &  \zihao{-4}{ 学校代码：10054} \\
-%     \zihao{-4}{国际图书分类号：\@cudc } & \zihao{-4}{ 密\quad\quad 级：公开}
-%   \end{tabularx}}
-%   \par\vspace{6em}
-%   \begin{center}
-%     % 根据学位类型显示不同标题
-%     \ifx\@degreetype\@academic
-%       {\zihao{-2} \textbf{学术博士学位论文}}
-%       \par\vspace{4.7em}
-%     \else
-%       {\zihao{-2} \textbf{专业博士学位论文}}
-%       \par\vspace{4.7em}
-%     \fi
-%     {\Heiti \zihao{2} \@ctitlezh}
-%     % 根据学位类型调整间距
-%     \ifx\@degreetype\@academic
-%       \par\vspace{13.5em}
-%     \else
-%       \par\vspace{10.7em}
-%     \fi
-%   \end{center}
-%   \begin{center}
-%     {\zihao{4} \renewcommand{\arraystretch}{1.6}
-%     \begin{tabular}{c@{\hspace{0em}}l}
-%         \makebox[3.7cm][s]{\zihao{4}{{\Heiti 博士研究生}：}}   & \zihao{4}\@cauthorzh   \\
-%         \makebox[3.7cm][s]{\zihao{4}{{\Heiti 导师}：}} & \zihao{4}\@cadvisorzh    \\
-%         % 专业博士显示企业导师
-%         \ifx\@degreetype\@professional
-%           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 企业导师}：}} & \zihao{4}\@cmentorzh   \\
-%         \fi
-%         % 学术博士显示"申请学位"，专业博士显示"申请学位 博士"
-%         \ifx\@degreetype\@academic
-%           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 申请学位}：}} & \zihao{4}\@cdegreezh   \\
-%           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 学科}：}}  & \zihao{4}\@csubjectzh  \\
-%           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 专业}：}}  & \zihao{4}\@cmajorzh  \\
-%         \else
-%           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 申请学位}：}} & \zihao{4}\@cdegreezh 博士 \\
-%           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 专业领域}：}}  & \zihao{4}\@csubjectzh  \\
-%           \makebox[3.7cm][s]{\zihao{4}{{\Heiti 学习方式}：}}  & \zihao{4}\@cclutivationzh  \\
-%         \fi
-%         \makebox[3.7cm][s]{\zihao{4}{{\Heiti 所在学院}：}} & \zihao{4}\@cschoolzh  \\
-%         \makebox[3.7cm][s]{\zihao{4}{{\Heiti 答辩日期}：}} & \zihao{4}\@cdatezh  \\
-%         \makebox[3.7cm][s]{\zihao{4}{{\Heiti 授予学位单位}：}}  & \zihao{4}华北电力大学  \\
-%     \end{tabular}}
-%   \end{center}
-%   \clearpage
-% }
-
-% % ====== 英文信息页 ====== %
-% \def\makeenglishinfopage{
-%   \thispagestyle{empty}
-%   \noindent \zihao{-4} Classified Index: \@cclc \\ 
-%   \noindent \zihao{-4} U.D.C: \@cudc
-%   \par \vspace{6.3em}
-%   \begin{center}
-%     % 根据学位类型显示不同标题
-%     \ifx\@degreetype\@academic
-%       {\zihao{-2} Dissertation for the Academic Doctoral Degree}
-%     \else
-%       {\zihao{-2} Dissertation for the Professional Doctoral Degree}
-%     \fi
-%     \par\vspace{2.9em}
-%     {\begin{spacing}{1.25} \bfseries \zihao{2} \@ctitleen \end{spacing}}
-%     \par\vspace{9em}
-%   \end{center}
-%   \begin{center}
-%     {\renewcommand{\arraystretch}{1.6}
-%     \ifx\@degreetype\@academic
-%       % 学术博士表格
-%       \begin{tabular}{@{}m{6.7cm}m{8cm}@{}}
-%         \textbf{\zihao{4} Candidate:} & \zihao{4} \@cauthoren \\
-%         \textbf{\zihao{4} Supervisor:} & \zihao{4} \@cadvisoren \\
-%         \textbf{\zihao{4} Co-Supervisor:} & \zihao{4} \@ccosupervisoren \\
-%         \textbf{\zihao{4} Academic Degree Applied for:} & \zihao{4} \@cdegreeen \\
-%         \textbf{\zihao{4} Subject:} & \zihao{4} \@csubjecten \\
-%         \textbf{\zihao{4} Speciality:} & \zihao{4} \@cmajoren \\
-%         \textbf{\zihao{4} School:} & \zihao{4} \@cschoolen \\ 
-%         \textbf{\zihao{4} Date of Defence:} & \zihao{4} \@cdateen \\
-%         \textbf{\zihao{4} Degree-Conferring-Institution:} & \zihao{4} North China Electric Power University \\
-%       \end{tabular}
-%     \else
-%       % 专业博士表格
-%       \begin{tabular}{@{}m{7cm}m{8cm}@{}}
-%         \textbf{\zihao{4} Candidate:} & \zihao{4} \@cauthoren \\
-%         \textbf{\zihao{4} Supervisor:} & \zihao{4} \@cadvisoren \\
-%         \textbf{\zihao{4} Enterprise mentor:} & \zihao{4} \@cmentoren \\
-%         \textbf{\zihao{4} Professional Degree Applied for:} & \zihao{4} \@cdegreeen \\
-%         \textbf{\zihao{4} Speciality:} & \zihao{4} \@csubjecten \\
-%         \textbf{\zihao{4} Cultivation ways:} & \zihao{4} \@cclutivationen \\
-%         \textbf{\zihao{4} School:} & \zihao{4} \@cschoolen \\
-%         \textbf{\zihao{4} Date of Defence:} & \zihao{4} \@cdateen \\
-%         \textbf{\zihao{4} Degree-Conferring-Institution:} & \zihao{4} North China Electric Power University \\
-%       \end{tabular}
-%     \fi
-%     }
-%   \end{center}
-%   \clearpage
-% }
-
-% % ====== 密级设置 ====== %
-% \def\csecretlevel#1{\def\@csecretlevel{#1}}\def\@csecretlevel{public}  % 密级，默认为公开
-
-% % 定义密级选项
-% \def\@public{public}
-% \def\@internal{internal}
-% \def\@secret{secret}
-% \def\@confidential{confidential}
-% \def\@topsecret{topsecret}
-
-% % ====== 论文声明页 ====== %
-% \def\makestatement{
-%   \thispagestyle{empty}
-%   \vspace*{-2.2em}
-%   \begin{center}{\ziju{0.01} \Heiti \zihao{-2} 华北电力大学学位论文原创性声明}\end{center}
-%   \par\vspace*{0.6em}
-%   {\zihao{-4} 
-%   本人郑重声明：此处所提交的学位论文《\@ctitlezh》，是本人在导师指导下，在华北电力大学攻读学位期间独立进行研究工作所取得的成果。论文中除已注明部分外不包含他人已发表或完成的研究成果。对本文的研究工作做出重要贡献的个人和集体，均已在文中以明确方式注明。论文由本人撰写，未使用人工智能代写。本声明的法律结果将完全由本人承担。
-%   \par \vspace*{1.5em}
-%   ~~ 作者签名: \hspace{3.5cm}
-%   \hspace{2.5cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 }
-%   \vspace*{4.5em}
-%   \begin{center}{\ziju{0} \Heiti \zihao{-2} 华北电力大学学位论文使用授权书}\end{center}
-%   \par\vspace*{1.2em}
-%   {\zihao{-4}
-%   学位论文系研究生在华北电力大学攻读学位期间在导师指导下完成的成果，知识产权归属华北电力大学所有，学位论文的研究内容不得以其它单位的名义发表。研究生完全了解华北电力大学关于保存、使用学位论文的规定，同意学校保留并向有关部门送交论文的复印件和电子版本，同意学校将学位论文的全部或部分内容编入有关数据库进行检索，允许论文被查阅和借阅，学校可以为存在馆际合作关系的兄弟高校用户提供文献传递服务和交换服务。本人授权华北电力大学，可以采用影印、缩印或其他复制手段保存论文，可以公布论文的全部或部分内容。
-%   \par \vspace*{1.5em}
-%   保密论文在保密期内遵守有关保密规定，解密后适用于此使用权限规定。\par
-%   本人知悉学位论文的使用权限，并将遵守有关规定。
-%   \par \vspace*{1.6em}
-%   本学位论文属于（请在相应方框内打“\checked”）\par
-%   % 根据参数自动选择对应的选项
-%   \ifx\@csecretlevel\@public $\Large\CheckedBox$ \else $\Large\Square$ \fi 公开 \hspace*{0.5cm} 
-%   \ifx\@csecretlevel\@internal $\Large\CheckedBox$ \else $\Large\Square$ \fi 内部 \hspace*{0.5cm} 
-%   \ifx\@csecretlevel\@secret $\Large\CheckedBox$ \else $\Large\Square$ \fi 秘密 \hspace*{0.5cm} 
-%   \ifx\@csecretlevel\@confidential $\Large\CheckedBox$ \else $\Large\Square$ \fi 机密 \hspace*{0.5cm} 
-%   \ifx\@csecretlevel\@topsecret $\Large\CheckedBox$ \else $\Large\Square$ \fi 绝密 \par 
-%   \par \vspace*{1.4em}
-%   作者签名: \hspace{3.5cm}
-%   \hspace{3cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 
-%   \par \vspace*{1.6em}
-%   导师签名: \hspace{3.5cm}
-%   \hspace{3cm}日期:\hspace{1cm}年\hspace{0.6cm}月 \hspace{0.6cm}日 
-%   }
-% }
-
-% \makeatother

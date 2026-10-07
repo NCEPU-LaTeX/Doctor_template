@@ -12,6 +12,8 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{microtype}
+\usepackage{bm}
+\usepackage{threeparttablex}
 \usepackage{array,tabularx}
 \captionsetup[table]{labelsep=space} 
 \makeatletter
@@ -26,67 +28,70 @@
     %% ============================================
     %% 学术博士信息填写示例
     %% ============================================
-    \degreetype{academic}      % 学术博士
-    % 中文信息
-    \ctitlezh{智能电网关键关键技术研究与应用}  % 中文标题
-    \cauthorzh{张三}   % 作者姓名
-    \cadvisorzh{李教授}   % 导师姓名
-    \cdegreezh{工学博士}  % 申请学位
-    \csubjectzh{电气工程} % 学科
-    \cmajorzh{电力系统及其自动化}   % 专业
-    \cschoolzh{电气与电子工程学院}  % 所在学院
-    \cdatezh{2024年6月}   % 答辩日期
-    
-    % 英文信息
-    \ctitleen{Research on Power System Fault Diagnosis Based on Deep Learning}  % 英文标题
-    \Ltitle{False} % False: 英文标题过长时使用小2号字体，True: 正常使用2号字
-    \cauthoren{Zhang San}  % 作者姓名
-    \cadvisoren{Prof. Li}  % 导师姓名
-    \ccosupervisoren{Prof. Wang}    % 联合导师（学术博士）
-    \cdegreeen{Doctor of Engineering}  % 申请学位
-    \csubjecten{Electrical Engineering}   % 学科
-    \cmajoren{Power System and Its Automation}   % 专业
-    \cschoolen{School of Electrical and Electronic Engineering}   % 所在学院
-    \cdateen{June, 2024}  % 答辩日期
-
-    % % ============================================
-    % % 专业博士信息填写示例
-    % % ============================================
-    % \degreetype{professional}  % 先设置为专业博士
+    % \degreetype{academic}      % 学术博士
     % % 中文信息
-    % \ctitlezh{智能电网关键技术研究与应用}  % 中文标题
-    % \cauthorzh{王五}       % 作者姓名
-    % \cadvisorzh{赵教授}    % 导师姓名
-    % \cmentorzh{孙工程师}            % 企业导师（专业博士）
-    % \cdegreezh{能源动力}            % 申请学位
-    % \csubjectzh{电气工程}           % 专业领域
-    % \cclutivationzh{全日制/非全日制}       % 学习方式
-    % \cschoolzh{电气与电子工程学院}
-    % \cdatezh{2024年6月}
+    % \ctitlezh{智能电网关键关键技术研究与应用}  % 中文标题
+    % \cauthorzh{张三}   % 作者姓名
+    % \cadvisorzh{李教授}   % 导师姓名
+    % \cdegreezh{工学博士}  % 申请学位
+    % \csubjectzh{电气工程} % 学科
+    % \cmajorzh{电力系统及其自动化}   % 专业
+    % \cschoolzh{电气与电子工程学院}  % 所在学院
+    % \cdatezh{2024年6月}   % 答辩日期
     
     % % 英文信息
-    % \ctitleen{Research and Application of Key Technologies in Smart Grid}  % 英文标题
-    % \Ltitle{False} % False: 英文标题过长时使用小2号字体，True: 使用2号字，可根据标题自行设置字号
-    % \cauthoren{Wang Wu}  % 作者姓名
-    % \cadvisoren{Prof. Zhao}  % 导师姓名
-    % \cmentoren{Engineer Sun}   % 企业导师（专业博士）
+    % \ctitleen{Research on Power System Fault Diagnosis Based on Deep Learning}  % 英文标题
+    % \Ltitle{False} % False: 英文标题过长时使用小2号字体，True: 正常使用2号字
+    % \cauthoren{Zhang San}  % 作者姓名
+    % \cadvisoren{Prof. Li}  % 导师姓名
+    % \ccosupervisoren{Prof. Wang}    % 联合导师（学术博士）
     % \cdegreeen{Doctor of Engineering}  % 申请学位
-    % \csubjecten{Electrical Engineering}  % 专业
-    % \cclutivationen{Full-time/Part-time}   % 学习方式
+    % \csubjecten{Electrical Engineering}   % 学科
+    % \cmajoren{Power System and Its Automation}   % 专业
     % \cschoolen{School of Electrical and Electronic Engineering}   % 所在学院
     % \cdateen{June, 2024}  % 答辩日期
+
+    % ============================================
+    % 专业博士信息填写示例
+    % ============================================
+    \degreetype{professional}  % 先设置为专业博士
+    % 中文信息
+    \ctitlezh{智能电网关键技术研究与应用}  % 中文标题
+    \cauthorzh{王五}       % 作者姓名
+    \cadvisorzh{赵教授}    % 导师姓名
+    \cdegreezh{能源动力}            % 申请学位
+    \csubjectzh{电气工程}           % 专业领域
+    \cclutivationzh{全日制/非全日制}       % 学习方式
+    \cschoolzh{电气与电子工程学院}
+    \cdatezh{2024年6月}
+    
+    % 英文信息
+    \ctitleen{Research and Application of Key Technologies in Smart Grid}  % 英文标题
+    \Ltitle{False} % False: 英文标题过长时使用小2号字体，True: 使用2号字，可根据标题自行设置字号
+    \cauthoren{Wang Wu}  % 作者姓名
+    \cadvisoren{Prof. Zhao}  % 导师姓名
+    \cdegreeen{Doctor of Engineering}  % 申请学位
+    \csubjecten{Electrical Engineering}  % 专业
+    \cclutivationen{Full-time/Part-time}   % 学习方式
+    \cschoolen{School of Electrical and Electronic Engineering}   % 所在学院
+    \cdateen{June, 2024}  % 答辩日期
 
     % =====================图书分类号和密级设置=======================
     % %图书分类号
     \cclc{xxxx}
     \cudc{xxxx}
+    \SchoolCode{10054}
     % % 设置密级，可选值如下：
     \csecretlevel{public}      % 公开（默认）
     % \csecretlevel{internal}    % 内部
     % \csecretlevel{secret}      % 秘密
     % \csecretlevel{confidential}% 机密
     % \csecretlevel{topsecret}   % 绝密
-  
+
+    %===================== 原创性声明页相关信息 =======================
+    \signaturestudent{figure_for_NCEPU/empty.png}   % 学生电子签字
+    \signaturesupervisor{figure_for_NCEPU/empty.png}   % 导师电子签字
+    
   
 \begin{document}
   \maketitlepage            % 封面
